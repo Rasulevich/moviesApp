@@ -1,0 +1,14 @@
+.movieList {
+    
+width: 1010px;
+height: 1147px;
+margin-left: 215px;
+top: 0px;
+display: flex;
+flex-wrap: wrap;
+}
+
+.movieItem {
+    display: flex;
+    flex-wrap: wrap;
+}
