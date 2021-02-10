@@ -1,0 +1,23 @@
+.tabs {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    padding: 10px;    
+    position: absolute;
+    top: 0; left: 40%;
+    border: none;
+    background-color: transparent;
+}
+
+.search_tab {
+    margin: 0 auto;
+    margin-top: 32px;
+}
+
+.rate_tab {
+    margin: 0 auto;
+    margin-top: 32px;
+    margin-left: 64px;
+} 

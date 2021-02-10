@@ -1,23 +1,25 @@
 .movie {
     display: flex;
-    height: 281px;
+    height: 278px;
     width: 454px;
-    margin: 12px;
+    margin:16px;
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15);
 }
+
 .movie-poster {
-      flex-basis: 30%;
-}
-.movie__img {
-    width: 183px;
+    flex-basis: 30%;
+    height: 281px;
 }
 
 .movie-content {
     display: block;
     overflow: hidden;
-
 }
+
 .movie-content__title {
     margin-left: 16px;
+    font-size:16px;
+    width: 200px;
 }
 
 .movie-content__date {
@@ -27,19 +29,93 @@
 
 .movie-content__genre {
     display: flex;    
-    /* justify-content: space-around; */
-}
-
-.movie-content__genre-item {
-    border: solid 1px lightgray;
-    padding: 3px;
-    padding-top: 0;
-    padding-bottom: 1px;
-    margin-left: 16px;
+    overflow: hidden;
 }
 
 .movie-content__discription {
     margin-left: 16px;
     margin-top: 16px;
     display: block;
+    height: 110px;
+    overflow: hidden;
+    width:240px;
+}
+
+.header {
+    display: flex;
+}
+
+.circle {
+    border: 2px solid ;
+    width: 34px; 
+    height: 34px;
+    border-radius: 50%;
+    display: flex; /* or inline-flex */
+    align-items: center; 
+    justify-content: center;
+    position: absolute;
+    margin-left: 228px;
+    margin-top: 5px;
+  }
+
+  .rate {
+      position: absolute;
+      margin-left: 16px;
+      margin-bottom: -10px;
+      min-width: 250px;
+  }
+
+  @media screen and (max-device-width: 480px) {
+    .movie {
+        display: flex;
+        height: 278px;
+        width: 388px;
+        margin-right:14px;
+    }   
+    
+    .movie-poster {
+        max-height: 90px;
+        max-width: 60px;
+        float: left;
+        margin: 0;
+    }
+    img {
+        max-height: 90px;
+        max-width: 60px;
+        margin-left: 10px;
+        margin-top: 6px;
+        margin-right: 10px;
+    }
+    .movie-content__discription {
+        margin-left: -46px;
+        margin-top: 28px;
+        display: block;
+        height: 110px;
+        overflow: hidden;
+        width:340px;
+    }
+    .movie-content {
+        overflow: visible;
+    }
+    .movie-content__title {
+        margin-left: 26px;
+    }
+    
+    .movie-content__date {
+        margin-left: 26px;
+    }
+    
+    .movie-content__genre {
+        margin-left: 10px;
+    }
+    .circle {
+        margin-left: 286px;
+        margin-top: 5px;
+      }
+      .rate {
+        position: absolute;
+        margin-left: 56px;
+        margin-bottom: -10px;
+        min-width: 250px;
+    }
 }

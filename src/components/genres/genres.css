@@ -1,0 +1,11 @@
+.movie-content__genre-item {
+    border: 1px solid #D9D9D9;
+    background: #FAFAFA;
+    padding: 2px;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-left: 16px;
+    white-space:nowrap;
+    font-size: 12px;
+}
+

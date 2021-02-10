@@ -1,14 +1,73 @@
-.movieList {
-    
-width: 1010px;
-height: 1147px;
-margin-left: 215px;
-top: 0px;
-display: flex;
-flex-wrap: wrap;
-}
-
-.movieItem {
+.movieList { 
+    width: 1040px;
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
     flex-wrap: wrap;
+}
+
+.tabs {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    padding: 10px;    
+    position: absolute;
+    top: -20px; left: 46%;
+    border: none;
+    background-color: transparent;
+}
+
+.search_tab {
+    margin: 0 auto;
+    margin-top: 32px;
+}
+
+.rate_tab {
+    margin: 0 auto;
+    margin-top: 32px;
+    margin-left: 64px;
+} 
+
+button:active, button:focus {
+    position: гelative;
+    color: rgba(24, 144, 255, 1);
+    outline: 0px;
+    border-bottom: 2px solid rgba(24, 144, 255, 1);
+}
+
+.pagination {
+    margin-top:32px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+@media screen and (max-device-width: 480px) {
+    body {
+        width: 480px;
+    }
+
+    .movieList { 
+        width: 100%;
+        flex-direction: column;
+        margin-right: 0;
+        padding: 0;
+        display: flex;
+    }
+
+    .tabs {
+        position: absolute;
+        top: -20px; 
+    }
+
+    .search_tab {
+        left:35%
+    }
+
+    .rate_tab {
+       left:40%;
+    } 
+    
 }
