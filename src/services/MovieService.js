@@ -1,18 +1,7 @@
 export default class MovieService {
 
     apiKey = 'a65d0b4dbc17f6ebd8b6206dd46dd8de';
-
-    sessionId = '5b8adc8622f0bb9b27d13b947a9be9e6'
     
-    async auth() {
-      const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${this.apiKey}`)
-      if (!res.ok) {
-        throw new Error(`Could not fetch ` + 
-          `, received ${res.status}`)
-      }
-      const result = await res.json();
-      return result
-    }
 
     async getResource (input,page) {
       if(input.length === 0) {

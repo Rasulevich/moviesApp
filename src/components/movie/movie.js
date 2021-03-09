@@ -1,4 +1,6 @@
+/* eslint-disable react/no-unused-state */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Rate } from 'antd';
 import Genres from '../genres/genres'
 import MovieService from '../../services/MovieService';
@@ -7,19 +9,40 @@ import  './movie.css';
 
 export default class Movie extends React.Component  {
 
+    static defaultProps = {
+        id:'',
+        discription:'',
+        title:'',
+        date:'',
+        image:55440,
+        rating:''
+    }
+
+    static propTypes = {
+        id: PropTypes.number,
+        discription: PropTypes.string,
+        title: PropTypes.string,
+        date: PropTypes.string,
+        rating: PropTypes.string,
+        image: PropTypes.string,
+    }
+
     movieApi = new MovieService();
 
     state = {
-        genres:[]
+        genres:[],
+        rate:'notRated',
+        eclipses:''
     }    
 
     componentDidMount () {
         this.updateGenre()
+        this.addEclipses()
     }
 
     updateGenre = () => {
-        const {getGenre, id} = this.props;
-            getGenre(id)
+        const {id} = this.props;
+           this.movieApi.getGenre(id)
             .then((res) => {
                 this.setState({
                     genres:res
@@ -31,12 +54,23 @@ export default class Movie extends React.Component  {
         const{id} = this.props
         this.movieApi.postRate(id,event)
         localStorage.setItem(id, event);
+        this.setState({
+            rate:'rated'
+        })
+    }
+
+    addEclipses = () => {
+        const{discription} = this.props;
+        if (discription.length > 150) {
+            this.setState({
+                eclipses:'...'
+            })
+        }
     }
 
     render() {
         const {title, date, discription, image,rating, id} = this.props
-        const {genres} = this.state
-
+        const {genres, eclipses} = this.state
         const localValue = localStorage.getItem(id);
         const gen = genres.slice(0,3)
         const genreElements = gen.map((item) => (
@@ -52,7 +86,7 @@ export default class Movie extends React.Component  {
   
         const src = `https://image.tmdb.org/t/p/w185/${image}`;
         const mobileSrc = `https://image.tmdb.org/t/p/w92/${image}`;
-        const newText = discription.slice(0, 240) ;
+        const newText = discription.split(' ').splice(0,29).join(' ');
 
         return (
             <div className='movie'>
@@ -72,7 +106,7 @@ export default class Movie extends React.Component  {
                     <div className='movie-content__genre'>  
                          {genreElements}
                     </div>
-                    <span className='movie-content__discription'>{newText} </span>
+                    <span className='movie-content__discription'>{newText}{eclipses} </span>
                     <div className='rate'>
                       <Rate  allowClear value={localValue} defaultValue={0} onChange={this.postRate} count={9} />     
                     </div>

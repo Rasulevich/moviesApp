@@ -1,11 +1,22 @@
 import React from 'react';
 import { Input } from 'antd';
+import PropTypes from 'prop-types';
 import 'antd/dist/antd.css';
 import './search.css';
 import MovieService from '../../services/MovieService';
 
 
 export default class Search extends React.Component {
+
+    static defaultProps = {
+        onSearch: () => {},
+        rate:false
+    }
+
+    static propTypes = {
+        onSearch: PropTypes.func,
+        rate: PropTypes.bool
+    }
 
     searchMovie = new MovieService();
 

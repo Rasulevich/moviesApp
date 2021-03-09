@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Spin, Alert, Pagination } from 'antd';
 import MovieService from '../../services/MovieService';
 import './movieList.css';
@@ -8,6 +9,17 @@ import '../spin.css';
 import {Consumer} from '../context/context'
 
 export default class MovieList extends React.Component{
+
+    static defaultProps = {
+        input:'',
+        rated:false
+    }
+
+    static propTypes = {
+        input: PropTypes.string,
+        rated:PropTypes.bool
+    }
+
      movieApi = new MovieService();
 
      state = {
@@ -97,7 +109,7 @@ export default class MovieList extends React.Component{
      render () {
         const {items, loading, error, currentPage} = this.state;
         const elements = items.map(item => (
-                <Consumer>
+                <Consumer key={item.id}>
                     {
                         ({getGenre}) => (
                                 <span key={item.id}>

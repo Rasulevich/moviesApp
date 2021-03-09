@@ -12,7 +12,9 @@
 }
 
 .movie-content {
-    display: block;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
     overflow: hidden;
 }
 
@@ -35,10 +37,9 @@
 .movie-content__discription {
     margin-left: 16px;
     margin-top: 16px;
-    display: block;
     height: 110px;
-    overflow: hidden;
     width:240px;
+    overflow: hidden;
 }
 
 .header {
@@ -61,7 +62,7 @@
   .rate {
       position: absolute;
       margin-left: 16px;
-      margin-bottom: -10px;
+      margin-top: 230px;
       min-width: 250px;
   }
 
