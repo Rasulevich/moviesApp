@@ -11,7 +11,19 @@ export default class App extends React.Component {
 
   state = {
     input: 'iron',
-    rated:false
+    hideSearch:false,
+    genresList:[],
+    guestSessionId:''
+  }
+
+  componentDidMount() {
+    this.genresList()
+    this.movieApi.guestSession().then((res)=>{
+      this.setState({
+        guestSessionId:res.guest_session_id
+      })
+    })
+    localStorage.clear();
   }
 
   onSearch = debounce((text) => {
@@ -20,19 +32,28 @@ export default class App extends React.Component {
     })
   },300)
 
-  rated = (boolean) => {
+  hideSearchInput = (boolean) => {
     this.setState({
-      rated: boolean
+      hideSearch: boolean
     })
   }
 
+  genresList() {
+    this.movieApi.getGenre()
+                    .then((res) =>{
+                      this.setState({
+                        genresList:res.genres
+                      })
+                    })
+  } 
+
   render() {
-    const{input,rated} = this.state
+    const{input,hideSearch,genresList, guestSessionId} = this.state;
     return (
-        <Provider value={this.movieApi}>
+        <Provider value={genresList}>
           <div className="App">
-            <Search onSearch={this.onSearch} rate={rated}/>
-            <MovieList input={input} rated={this.rated}/>
+            <Search onSearch={this.onSearch} hideSearch={hideSearch}/>
+            <MovieList input={input} hideSearchInput={this.hideSearchInput} guestSessionId={guestSessionId}/>
           </div>
         </Provider>
     );

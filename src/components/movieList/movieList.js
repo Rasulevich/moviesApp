@@ -6,28 +6,29 @@ import './movieList.css';
 import Movie from '../movie/movie';
 import 'antd/dist/antd.css';
 import '../spin.css';
-import {Consumer} from '../context/context'
+import {GenreListConsumer} from '../context/context'
 
 export default class MovieList extends React.Component{
 
     static defaultProps = {
         input:'',
-        rated:false
+        hideSearchInput:false
     }
 
     static propTypes = {
         input: PropTypes.string,
-        rated:PropTypes.bool
+        hideSearchInput:PropTypes.func
     }
 
      movieApi = new MovieService();
 
+    
      state = {
          items:[],
          loading: true,
          error:false,
          page:1,
-         rated:false
+         rated:false,
      }
 
      componentDidMount() {
@@ -62,31 +63,32 @@ export default class MovieList extends React.Component{
      }
 
      ratedMovies = () => {
-        const {rated} = this.props;
+        const {hideSearchInput} = this.props;
+        hideSearchInput(true);
         this.setState({
-            rated:true
+            rated:true,
+            page:1
         })
-        rated(true)
       }
 
       allMovies = () => {
-        const {rated} = this.props;
+        const {hideSearchInput} = this.props;
+        hideSearchInput(false);
         this.setState({
             rated:false
-        })
-        rated(false)
+        }) 
       }
      
      update() {
-         const {input} = this.props
+         const {input,guestSessionId} = this.props
          const {page, rated} = this.state
 
          if(!rated) {
             this.movieApi
-            .searchMovie(input,page)
+            .getResource(input,page)
             .then((res) => {
                this.setState({
-                    items:res,
+                    items:res.results,
                     loading:false,
                     error:false
                 })
@@ -96,57 +98,63 @@ export default class MovieList extends React.Component{
 
          if(rated) {
              this.movieApi
-             .ratedMovies(page)
+             .ratedMovies(page,guestSessionId)
              .then((res) => {
                  this.setState({
                     items:res.results,
-                    loading:false
+                    loading:false,
                  })
              })
          }         
      }
 
      render () {
-        const {items, loading, error, currentPage} = this.state;
+        const {items, loading, error} = this.state;
+        const {guestSessionId} = this.props
+        const movie = (item, genresList) => (
+                <span key={item.id}>
+                                <Movie 
+                                    title ={item.original_title} 
+                                    date = {item.release_date}
+                                    discription = {item.overview}
+                                    image = {item.poster_path}
+                                    rating={item.vote_average}
+                                    id={item.id}
+                                    userRating={item.rating}
+                                    genresList={genresList}
+                                    genres={item.genre_ids}
+                                    guestSessionId={guestSessionId}/>   
+                            </span>  
+            )
+        
         const elements = items.map(item => (
-                <Consumer key={item.id}>
-                    {
-                        ({getGenre}) => (
-                                <span key={item.id}>
-                                    <Movie 
-                                        title ={item.original_title} 
-                                        date = {item.release_date}
-                                        discription = {item.overview}
-                                        image = {item.poster_path}
-                                        rating={item.vote_average}
-                                        id={item.id}
-                                        userRating={item.rating}
-                                        getGenre={getGenre}/>   
-                                </span>                                 
-                            )
-                    }                  
-                </Consumer>               
-            ))
+            <GenreListConsumer key={item.id}>
+                {(genresList) => movie(item,genresList)}                  
+            </GenreListConsumer>               
+        ))       
+        
         if (loading) {
             return (
               <div className="spin"><Spin/></div>
             )
         }
+
         if (error) {
             return (
                 <Alert message="Something go wrong" type="success"/>
             )
         }
+
         return (
            <div>
                 <button onClick={this.allMovies} type='button' className='tabs search_tab'> Search </button> <button type='button' className='tabs rate_tab' onClick={this.ratedMovies}>Rated </button>
                 <ul className='movieList' >
                     {elements}
-                    <div className='pagination'>
-                         <Pagination  defaultCurrent={currentPage} total={50} 
-                                      onChange={this.pageChange}/>
-                    </div>
                 </ul>
+                <div className='pagination'>
+                         <Pagination  defaultCurrent={1} total={50} 
+                                      onChange={this.pageChange} />
+                    </div>
            </div>       
         )
      }

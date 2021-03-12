@@ -10,12 +10,12 @@ export default class Search extends React.Component {
 
     static defaultProps = {
         onSearch: () => {},
-        rate:false
+        hideSearch:false
     }
 
     static propTypes = {
         onSearch: PropTypes.func,
-        rate: PropTypes.bool
+        hideSearch: PropTypes.bool
     }
 
     searchMovie = new MovieService();
@@ -40,9 +40,9 @@ export default class Search extends React.Component {
     }
     
     render() {
-        const {rate} = this.props;
+        const {hideSearch} = this.props;
         const{label} = this.state;
-        if (!rate) {
+        if (!hideSearch) {
             return (
                 <div>
                     <form onSubmit={this.onSubmit}>
